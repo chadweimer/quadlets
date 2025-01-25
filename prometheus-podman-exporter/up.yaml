@@ -1,0 +1,17 @@
+- name: Bring up prometheus-podman-exporter
+  hosts:
+    - servers
+    - workstations
+
+  tasks:
+    - name: Bring up service
+      ansible.builtin.import_tasks: ../common/tasks.up.yaml
+      vars:
+        fw_services:
+          to_create:
+            - name: prometheus-podman-exporter
+              port: 9882/tcp
+          to_enable:
+            - prometheus-podman-exporter
+        systemd_services:
+          - prometheus-podman-exporter.service

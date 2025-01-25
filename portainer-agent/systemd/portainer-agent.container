@@ -1,0 +1,17 @@
+[Container]
+AutoUpdate=registry
+ContainerName=portainer_agent
+Group=0
+Image=docker.io/portainer/agent:sts
+PodmanArgs=--privileged
+PublishPort=9001:9001
+User=0
+Volume=%t/podman/podman.sock:/var/run/docker.sock
+Volume=%h/.local/share/containers/storage/volumes:/var/lib/docker/volumes
+Volume=/:/host
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

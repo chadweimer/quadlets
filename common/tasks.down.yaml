@@ -1,0 +1,32 @@
+- name: Stop the systemd services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    scope: user
+    state: stopped
+  with_items: "{{ systemd_services | default([]) }}"
+
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
+- name: Disable Firewall Services
+  become: true
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    immediate: true
+    permanent: true
+    state: disabled
+  with_items: "{{ fw_services.to_disable | default([]) }}"
+  when:
+    - services['firewalld.service'] is defined
+    - services['firewalld.service']['state'] == 'running'
+
+- name: Delete Quadlet files
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/containers/systemd/{{ item.path }}"
+    state: absent
+  with_filetree: "{{ playbook_dir }}/systemd/"
+
+- name: Run daemon reload to make Quadlet delete the service files
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user

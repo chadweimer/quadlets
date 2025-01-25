@@ -1,0 +1,14 @@
+- name: Bring down node-exporter
+  hosts:
+    - servers
+    - workstations
+
+  tasks:
+    - name: Bring down service
+      ansible.builtin.import_tasks: ../common/tasks.down.yaml
+      vars:
+        fw_services:
+          to_disable:
+            - node-exporter
+        systemd_services:
+          - node_exporter.service

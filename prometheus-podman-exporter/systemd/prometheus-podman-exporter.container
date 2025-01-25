@@ -1,0 +1,15 @@
+[Container]
+AutoUpdate=registry
+ContainerName=podman_exporter
+Environment=CONTAINER_HOST=unix:///run/podman/podman.sock
+Image=quay.io/navidys/prometheus-podman-exporter:latest
+PublishPort=9882:9882
+SecurityLabelDisable=true
+UserNS=keep-id:uid=65534
+Volume=%t/podman/podman.sock:/run/podman/podman.sock
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,17 @@
+- name: Bring up portainer-agent
+  hosts:
+    - servers
+    - workstations
+
+  tasks:
+    - name: Bring up service
+      ansible.builtin.import_tasks: ../common/tasks.up.yaml
+      vars:
+        fw_services:
+          to_create:
+            - name: portainer-agent
+              port: 9001/tcp
+          to_enable:
+            - portainer-agent
+        systemd_services:
+          - portainer-agent.service

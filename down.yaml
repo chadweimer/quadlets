@@ -1,0 +1,6 @@
+- name: Node Exporter
+  ansible.builtin.import_playbook: node-exporter/down.yaml
+- name: Portainer Agent
+  ansible.builtin.import_playbook: portainer-agent/down.yaml
+- name: Prometheus Podman Exporter
+  ansible.builtin.import_playbook: prometheus-podman-exporter/down.yaml
