@@ -4,7 +4,8 @@ My personal Podman Quadlets
 
 ## Ansible
 
-Ansible Playbooks are provided to easily bring these quadlets up and down in a matter similar to docker compose.
+Ansible Playbooks are provided to easily bring these quadlets up and down in a manner similar to docker compose.
+These playbooks place the quadlet files in the rootless podman folder, add and enable firewalld services, and enable the resulting systemd services.
 
 ### Inventory
 
